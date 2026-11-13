@@ -1,0 +1,248 @@
+// Prisma Schema for SAKAN Platform
+// Database Provider: SQLite for fast, friction-free local development (zero passwords)
+// Can be converted to PostgreSQL for production by changing provider to "postgresql"
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// -----------------------------------------------------------------------------
+// USER & AUTHENTICATION
+// -----------------------------------------------------------------------------
+
+model User {
+  id                 String    @id @default(cuid())
+  name               String
+  phone              String?   @unique
+  email              String?   @unique
+  passwordHash       String?
+  role               String    @default("USER") // "USER" | "ADMIN" | "SUPER_ADMIN"
+  isVerified         Boolean   @default(false)
+  isBanned           Boolean   @default(false)
+  banReason          String?
+  avatarUrl          String?
+  resetToken         String?
+  resetTokenExpiry   DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  // Relationships
+  properties          Property[]
+  leadsInitiated      ContactLead[]       @relation("ViewerLeads")
+  commissionPayments  CommissionPayment[]
+  reportsFiled        Report[]            @relation("ReporterUser")
+  auditLogs           AuditLog[]
+  resetOtps           PasswordResetOtp[]
+
+  @@index([phone])
+  @@index([role])
+}
+
+model PasswordResetOtp {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  otpHash   String   // SHA-256 hash of the 6-digit OTP
+  expiresAt DateTime // 5 minutes expiration
+  attempts  Int      @default(0) // Anti-brute force counter (max 5)
+  isUsed    Boolean  @default(false) // Prevents replay attacks
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+// -----------------------------------------------------------------------------
+// PROPERTY MANAGEMENT
+// -----------------------------------------------------------------------------
+
+model Property {
+  id              String         @id @default(cuid())
+  title           String
+  description     String
+  city            String
+  district        String?        // الحي / المنطقة
+  address         String?
+  latitude        Float?
+  longitude       Float?
+
+  // Financials & Specs
+  price           Float
+  currency        String         @default("SDG") // "SDG" | "USD"
+  bedrooms        Int            @default(1)
+  bathrooms       Int            @default(1)
+  contactPhone    String         // Direct contact number displayed to tenant
+  whatsappNumber  String?
+
+  // Operational State
+  status          String         @default("ACTIVE") // "ACTIVE" (Instant Publish) | "RENTED" | "ARCHIVED" | "BANNED"
+  isFeatured      Boolean        @default(false)
+  viewsCount      Int            @default(0)
+  leadsCount      Int            @default(0)
+
+  // Ownership
+  landlordId      String
+  landlord        User           @relation(fields: [landlordId], references: [id], onDelete: Cascade)
+
+  // Relationships
+  images          PropertyImage[]
+  amenities       PropertyAmenity[]
+  leads           ContactLead[]
+  commissionPayments CommissionPayment[]
+  reports         Report[]
+
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([city, status])
+  @@index([price, currency])
+  @@index([landlordId])
+  @@index([status])
+}
+
+model PropertyImage {
+  id          String   @id @default(cuid())
+  propertyId  String
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  url         String
+  publicId    String   @default("") // Cloudinary or storage ID
+  sortOrder   Int      @default(0)
+  isCover     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([propertyId])
+}
+
+// -----------------------------------------------------------------------------
+// AMENITIES
+// -----------------------------------------------------------------------------
+
+model Amenity {
+  id          String            @id @default(cuid())
+  name        String            @unique // e.g., تكييف، طاقة شمسية، ستارلينك
+  icon        String            // Icon name (e.g., Lucide icon key)
+  properties  PropertyAmenity[]
+}
+
+model PropertyAmenity {
+  propertyId  String
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  amenityId   String
+  amenity     Amenity  @relation(fields: [amenityId], references: [id], onDelete: Cascade)
+
+  @@id([propertyId, amenityId])
+}
+
+// -----------------------------------------------------------------------------
+// LEAD TRACKING (WHO CLICKED PHONE / WHATSAPP)
+// -----------------------------------------------------------------------------
+
+model ContactLead {
+  id          String   @id @default(cuid())
+  propertyId  String
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  viewerId    String?
+  viewer      User?    @relation("ViewerLeads", fields: [viewerId], references: [id], onDelete: SetNull)
+  viewerPhone String?
+  viewerIp    String?
+  type        String   @default("PHONE_CALL") // "PHONE_CALL" | "WHATSAPP"
+  createdAt   DateTime @default(now())
+
+  @@index([propertyId])
+  @@index([viewerId])
+  @@index([createdAt])
+}
+
+// -----------------------------------------------------------------------------
+// COMMISSION PAYMENTS (5% LANDLORD + 5% TENANT)
+// -----------------------------------------------------------------------------
+
+model CommissionPayment {
+  id              String   @id @default(cuid())
+  propertyId      String
+  property        Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  payerId         String
+  payer           User     @relation(fields: [payerId], references: [id], onDelete: Cascade)
+  payerType       String   // "LANDLORD" | "TENANT"
+  
+  amount          Float
+  currency        String   @default("SDG")
+  receiptImageUrl String?  // Screenshot of Bankak / transfer receipt
+  transactionRef  String?  // Reference code
+  
+  status          String   @default("PENDING") // "PENDING" | "APPROVED" | "REJECTED"
+  adminNotes      String?
+  reviewedAt      DateTime?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([propertyId])
+  @@index([payerId])
+  @@index([status])
+}
+
+// -----------------------------------------------------------------------------
+// SYSTEM SETTINGS & COMMISSION CONTROL SWITCH
+// -----------------------------------------------------------------------------
+
+model SystemSetting {
+  id                        String   @id @default("singleton")
+  
+  // Commission Engine Switch
+  commissionEnabled         Boolean  @default(true) // Toggle On/Off globally
+  landlordCommissionPercent Float    @default(5.0)
+  tenantCommissionPercent   Float    @default(5.0)
+
+  // Payment destination accounts
+  bankakAccountNumber       String?  // رقم حساب بنكك
+  bankakAccountName         String?  // اسم صاحب الحساب في بنكك
+  contactSupportPhone       String?  // هاتف الدعم الفني
+  
+  updatedAt                 DateTime @updatedAt
+}
+
+// -----------------------------------------------------------------------------
+// COMMUNITY REPORTS & SAFETY (POST-MODERATION)
+// -----------------------------------------------------------------------------
+
+model Report {
+  id          String   @id @default(cuid())
+  propertyId  String
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  reporterId  String?
+  reporter    User?    @relation("ReporterUser", fields: [reporterId], references: [id], onDelete: SetNull)
+  
+  reason      String   // "ALREADY_RENTED" | "INCORRECT_PHONE" | "MISLEADING_PRICE" | "FAKE_PHOTOS" | "OTHER"
+  details     String?
+  status      String   @default("PENDING") // "PENDING" | "RESOLVED" | "DISMISSED"
+  actionTaken String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([propertyId])
+  @@index([status])
+}
+
+// -----------------------------------------------------------------------------
+// AUDIT LOG (ADMIN SECURITY LOG)
+// -----------------------------------------------------------------------------
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  adminId   String
+  admin     User     @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  action    String   // e.g. "TOGGLE_COMMISSION", "BAN_USER", "VERIFY_PAYMENT"
+  metadata  String?  // JSON string
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@index([adminId])
+  @@index([createdAt])
+}
