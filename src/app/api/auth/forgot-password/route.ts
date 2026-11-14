@@ -36,18 +36,15 @@ export async function POST(request: Request) {
       where: { email: cleanEmail },
     });
 
-    // 3. Security (Anti-Enumeration):
-    // Even if user is not found, return a successful generic message
-    // so attackers cannot enumerate valid user emails.
-    const genericSuccessMessage =
-      "إذا كان هذا البريد مسجلاً لدينا، فستصلك رسالة تحتوي على رمز التحقق خلال لحظات.";
-
+    // 3. Verify user exists in the database
     if (!user) {
-      return NextResponse.json({
-        success: true,
-        message: genericSuccessMessage,
-        email: cleanEmail,
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          error: "هذا البريد الإلكتروني غير مسجل في منصة سكن، يرجى التأكد من البريد أو إنشاء حساب جديد.",
+        },
+        { status: 404 }
+      );
     }
 
     if (user.isBanned) {
@@ -94,7 +91,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      message: genericSuccessMessage,
+      message: "تم إرسال رمز التحقق (OTP) إلى بريدك الإلكتروني بنجاح!",
       email: cleanEmail,
     });
   } catch (error: any) {
