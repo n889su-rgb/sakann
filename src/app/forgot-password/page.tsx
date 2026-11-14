@@ -312,7 +312,7 @@ export default function ForgotPasswordPage() {
             <form onSubmit={handleEmailSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                  البريد الإلكتروني المسجل في سكن
+                  أدخل البريد الإلكتروني
                 </label>
                 <div className="relative">
                   <input
