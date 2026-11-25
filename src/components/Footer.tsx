@@ -84,9 +84,6 @@ export function Footer() {
                 <ShieldCheck className="w-3.5 h-3.5 text-brand-700 shrink-0" />
                 <span>عمولة موحدة وواضحة 5% عند إتمام الإيجار</span>
               </div>
-              <div className="p-2 bg-slate-50 border border-slate-200/80 rounded-xl text-[10px] text-slate-600 mt-1 font-mono">
-                بنكك: <span className="font-bold text-brand-900">2345678</span> (منصة بيت العقارية)
-              </div>
             </div>
           </div>
         </div>

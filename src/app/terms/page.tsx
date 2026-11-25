@@ -62,11 +62,8 @@ export default function TermsPage() {
           <div className="p-4 bg-emerald-50 border border-emerald-200/80 rounded-2xl space-y-2">
             <p className="font-bold text-emerald-950">عمولة المنصة موحدة وواضحة (5%):</p>
             <p className="text-xs text-emerald-900 leading-relaxed">
-              تستحق المنصة عمولتها بنسبة 5% من قيمة الإيجار للشهر الأول (أو إجمالي قيمة الإيجار اليومي) عند إتمام المعاينة والاتفاق. يتم سداد العمولة عبر تحويل تطبيق <strong>بنكك (بنك الخرطوم)</strong> إلى الحساب المعتمد:
+              تستحق المنصة عمولتها بنسبة 5% من قيمة الإيجار للشهر الأول (أو إجمالي قيمة الإيجار اليومي) عند إتمام المعاينة والاتفاق، ويتم سدادها بالتنسيق المباشر مع إدارة المنصة بعد إتمام التأجير.
             </p>
-            <div className="p-2.5 bg-white border border-emerald-300 rounded-xl font-mono text-xs text-slate-800">
-              رقم الحساب: <strong className="text-brand-900 text-sm">2345678</strong> • الاسم: <strong>منصة بيت العقارية</strong>
-            </div>
           </div>
         </section>
 
