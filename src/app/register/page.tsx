@@ -83,9 +83,9 @@ export default function RegisterPage() {
       <div className="flex items-center justify-center pb-4 border-b border-slate-200 mb-6">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-white border border-slate-200/90 p-1 flex items-center justify-center shadow-sm">
-            <Image src="/logo.png" alt="سكن SAKAN" width={32} height={32} className="w-full h-full object-contain" priority />
+            <Image src="/logo.png" alt="بَيْت BAYT" width={32} height={32} className="w-full h-full object-contain" priority />
           </div>
-          <span className="text-base font-extrabold text-brand-900 tracking-tight">سَكَن SAKAN</span>
+          <span className="text-base font-extrabold text-brand-900 tracking-tight">بَيْت BAYT</span>
         </div>
       </div>
 
@@ -98,7 +98,7 @@ export default function RegisterPage() {
 
         <div className="text-center space-y-1">
           <div className="w-16 h-16 rounded-2xl bg-white border border-slate-200/90 p-2 flex items-center justify-center mx-auto mb-3 shadow-md">
-            <Image src="/logo.png" alt="سكن SAKAN" width={52} height={52} className="w-full h-full object-contain" priority />
+            <Image src="/logo.png" alt="بَيْت BAYT" width={52} height={52} className="w-full h-full object-contain" priority />
           </div>
           <h1 className="text-xl font-extrabold text-slate-900">إنشاء حساب جديد</h1>
           <p className="text-xs text-slate-500 font-medium">

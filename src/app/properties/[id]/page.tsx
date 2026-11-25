@@ -11,10 +11,10 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     where: { id: params.id },
   });
 
-  if (!property) return { title: "العقار غير موجود | سكن" };
+  if (!property) return { title: "العقار غير موجود | بَيْت" };
 
   return {
-    title: `${property.title} | سكن`,
+    title: `${property.title} | بَيْت`,
     description: property.description.slice(0, 160),
   };
 }

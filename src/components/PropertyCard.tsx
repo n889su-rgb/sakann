@@ -59,7 +59,7 @@ export function PropertyCard({ property, onContactClick, isGuest }: PropertyCard
 
     const url = typeof window !== "undefined" ? `${window.location.origin}/properties/${property.id}` : "";
     const shareData = {
-      title: `${property.title} | منصة سكن`,
+      title: `${property.title} | منصة بَيْت`,
       text: `شاهد هذه الشقة المفروشة في ${property.city} (${property.district || ""}) بسعر ${property.price} ${property.currency} شهرياً:`,
       url,
     };

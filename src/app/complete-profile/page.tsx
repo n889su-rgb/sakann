@@ -94,9 +94,9 @@ export default function CompleteProfilePage() {
       <div className="flex items-center justify-center pb-4 border-b border-slate-200 mb-6">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-xl bg-brand-800 flex items-center justify-center text-white font-extrabold text-base shadow-sm">
-            س
+            ب
           </div>
-          <span className="text-base font-extrabold text-brand-900 tracking-tight">سَكَن SAKAN</span>
+          <span className="text-base font-extrabold text-brand-900 tracking-tight">بَيْت BAYT</span>
         </div>
       </div>
 

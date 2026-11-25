@@ -64,13 +64,13 @@ export default function AdminLoginPage() {
         {/* Top Header */}
         <div className="text-center space-y-2">
           <div className="w-16 h-16 rounded-2xl bg-white p-2 border border-slate-700/80 flex items-center justify-center mx-auto shadow-lg">
-            <Image src="/logo.png" alt="سكن SAKAN" width={52} height={52} className="w-full h-full object-contain" priority />
+            <Image src="/logo.png" alt="بَيْت BAYT" width={52} height={52} className="w-full h-full object-contain" priority />
           </div>
           <h1 className="text-xl font-extrabold tracking-tight text-white">
-            بوابة إدارة منصة سَكَن
+            بوابة إدارة منصة بَيْت
           </h1>
           <p className="text-xs text-slate-400 font-medium">
-            SAKAN Executive Control Portal • تسجيل دخول مخصص
+            BAYT Executive Control Portal • تسجيل دخول مخصص
           </p>
         </div>
 
@@ -146,7 +146,7 @@ export default function AdminLoginPage() {
             className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 font-medium transition"
           >
             <ArrowRight className="w-3.5 h-3.5" />
-            العودة إلى الصفحة الرئيسية لمنصة سَكَن
+            العودة إلى الصفحة الرئيسية لمنصة بَيْت
           </Link>
         </div>
       </div>

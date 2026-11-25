@@ -445,7 +445,7 @@ export default function NewPropertyPage() {
             className="w-5 h-5 accent-brand-800 rounded mt-0.5 cursor-pointer shrink-0"
           />
           <label htmlFor="agreement" className="text-xs text-emerald-950 leading-relaxed font-medium cursor-pointer">
-            أتعهد بصفتي مالك العقار بدفع عمولة منصة بنسبة <span className="font-bold underline">5%</span> لإدارة المنصة المشرفة على تطبيق سكن في حال إتمام تأجير الشقة عبر التطبيق.
+            أتعهد بصفتي مالك العقار بدفع عمولة منصة بنسبة <span className="font-bold underline">5%</span> لإدارة المنصة المشرفة على تطبيق بَيْت في حال إتمام تأجير الشقة عبر التطبيق.
           </label>
         </div>
 

@@ -93,7 +93,7 @@ export default function AdminDashboardPage() {
   const [landlordPercent, setLandlordPercent] = useState(5.0);
   const [tenantPercent, setTenantPercent] = useState(5.0);
   const [bankakNumber, setBankakNumber] = useState("2345678");
-  const [bankakName, setBankakName] = useState("منصة سكن العقارية");
+  const [bankakName, setBankakName] = useState("منصة بيت العقارية");
 
   // Tab State
   const [activeTab, setActiveTab] = useState<"settings" | "properties" | "leads" | "reports" | "users">("users");
@@ -403,10 +403,10 @@ export default function AdminDashboardPage() {
 
       // 5. Create workbook and add the sheet
       const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "مستخدمو منصة سكن");
+      XLSX.utils.book_append_sheet(workbook, worksheet, "مستخدمو منصة بيت");
 
       // 6. Download as real .xlsx Excel file
-      const fileName = `سجل_مستخدمي_منصة_سكن_${new Date().toISOString().slice(0, 10)}.xlsx`;
+      const fileName = `سجل_مستخدمي_منصة_بيت_${new Date().toISOString().slice(0, 10)}.xlsx`;
       XLSX.writeFile(workbook, fileName);
 
       setSaveMessage("✅ تم تنزيل سجل المستخدمين بنجاح بصيغة Microsoft Excel (.xlsx) المنظمة!");
@@ -579,7 +579,7 @@ export default function AdminDashboardPage() {
             <div className="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center mx-auto mb-3 shadow-md">
               <Lock className="w-7 h-7 text-emerald-400" />
             </div>
-            <h1 className="text-xl font-extrabold text-slate-900">بوابة إدارة منصة سَكَن</h1>
+            <h1 className="text-xl font-extrabold text-slate-900">بوابة إدارة منصة بَيْت</h1>
             <p className="text-xs text-slate-500 font-medium">
               هذه المنطقة مخصصة حصرياً لمشرفي وإدارة المنصة
             </p>
@@ -659,7 +659,7 @@ export default function AdminDashboardPage() {
       <div className="flex items-center justify-between pb-4 border-b border-slate-200">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200/90 p-1.5 flex items-center justify-center shadow-md">
-            <Image src="/logo.png" alt="سكن SAKAN" width={38} height={38} className="w-full h-full object-contain" priority />
+            <Image src="/logo.png" alt="بَيْت BAYT" width={38} height={38} className="w-full h-full object-contain" priority />
           </div>
           <div>
             <h1 className="text-xl font-extrabold text-slate-900">لوحة تحكم المشرفين</h1>
@@ -692,7 +692,7 @@ export default function AdminDashboardPage() {
       <div className="bg-slate-900 text-white p-4 sm:p-5 rounded-3xl border border-slate-800 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200/90 p-1.5 flex items-center justify-center shadow-md shrink-0">
-            <Image src="/logo.png" alt="سكن SAKAN" width={38} height={38} className="w-full h-full object-contain" priority />
+            <Image src="/logo.png" alt="بَيْت BAYT" width={38} height={38} className="w-full h-full object-contain" priority />
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -702,7 +702,7 @@ export default function AdminDashboardPage() {
               </span>
             </div>
             <div className="flex items-center gap-2.5 text-[11px] text-slate-400 font-mono mt-0.5">
-              <span>{currentUser.email || "admin@sakan.app"}</span>
+              <span>{currentUser.email || "admin@bayt.app"}</span>
               <span>•</span>
               <span className="text-emerald-400 dir-ltr font-bold">{currentUser.phone || "لا يوجد هاتف مسجل"}</span>
             </div>
@@ -1592,7 +1592,7 @@ export default function AdminDashboardPage() {
                 </div>
                 <div>
                   <h3 className="font-extrabold text-sm text-white">إضافة وتعيين مدير جديد</h3>
-                  <span className="text-[11px] text-slate-400 font-medium">منح صلاحيات الإشراف على منصة سَكَن</span>
+                  <span className="text-[11px] text-slate-400 font-medium">منح صلاحيات الإشراف على منصة بَيْت</span>
                 </div>
               </div>
               <button
@@ -1629,7 +1629,7 @@ export default function AdminDashboardPage() {
                   type="email"
                   value={newAdminEmail}
                   onChange={(e) => setNewAdminEmail(e.target.value)}
-                  placeholder="admin2@sakan.app"
+                  placeholder="admin2@bayt.app"
                   className="w-full bg-slate-800 border border-slate-700 py-2.5 px-3 rounded-xl text-xs font-semibold text-white dir-ltr text-right focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
               </div>

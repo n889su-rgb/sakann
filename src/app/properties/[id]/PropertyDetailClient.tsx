@@ -74,8 +74,8 @@ export default function PropertyDetailClient({
   const handleShare = async () => {
     const url = typeof window !== "undefined" ? window.location.href : "";
     const shareData = {
-      title: `${property.title} | منصة سكن`,
-      text: `شاهد هذه الشقة المفروشة في ${property.city} (${property.district || ""}) بسعر ${property.price} ${property.currency} شهرياً على منصة سكن:`,
+      title: `${property.title} | منصة بَيْت`,
+      text: `شاهد هذه الشقة المفروشة في ${property.city} (${property.district || ""}) بسعر ${property.price} ${property.currency} شهرياً على منصة بَيْت:`,
       url,
     };
 
@@ -373,7 +373,7 @@ export default function PropertyDetailClient({
             <div className="space-y-2.5">
               <a
                 href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                  `شاهد هذه الشقة المفروشة المميزة على منصة سكن:\n${property.title} - ${property.city}\n${
+                  `شاهد هذه الشقة المفروشة المميزة على منصة بَيْت:\n${property.title} - ${property.city}\n${
                     typeof window !== "undefined" ? window.location.href : ""
                   }`
                 )}`}

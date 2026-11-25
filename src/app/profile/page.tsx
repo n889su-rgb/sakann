@@ -429,7 +429,7 @@ export default function ProfilePage() {
                   </span>
                 )}
               </div>
-              <span className="text-xs text-slate-500 font-medium block">مؤجر ومعلن معتمد في سكن</span>
+              <span className="text-xs text-slate-500 font-medium block">مؤجر ومعلن معتمد في بَيْت</span>
               {currentUser.avatarUrl && (
                 <button
                   type="button"
@@ -832,7 +832,7 @@ export default function ProfilePage() {
 
             <div className="bg-emerald-50 p-3 rounded-2xl border border-emerald-200 mb-4 text-xs font-bold text-emerald-950">
               <div>حساب بنكك: <span className="dir-ltr inline-block">2345678</span></div>
-              <div>الاسم: منصة سكن العقارية</div>
+              <div>الاسم: منصة بيت العقارية</div>
             </div>
 
             {paymentSuccess ? (

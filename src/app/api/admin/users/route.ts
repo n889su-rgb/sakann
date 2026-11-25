@@ -244,9 +244,9 @@ export async function PATCH(request: Request) {
     }
 
     // Safeguard the main platform admin
-    if (targetUser.email === "admin@sakan.app" && role === "USER") {
+    if ((targetUser.email === "admin@sakan.app" || targetUser.email === "admin@bayt.app") && role === "USER") {
       return NextResponse.json(
-        { success: false, error: "لا يمكن إلغاء صلاحية المشرف الأساسي لمنصة سكن" },
+        { success: false, error: "لا يمكن إلغاء صلاحية المشرف الأساسي لمنصة بَيْت" },
         { status: 403 }
       );
     }

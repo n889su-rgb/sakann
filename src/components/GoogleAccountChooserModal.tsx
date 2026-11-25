@@ -128,7 +128,7 @@ export function GoogleAccountChooserModal({ isOpen, onClose }: GoogleAccountChoo
               </svg>
             </div>
             <h2 className="text-lg font-bold text-white">اختيار حساب</h2>
-            <p className="text-xs text-slate-400 mt-0.5">المتابعة إلى سَكَن SAKAN</p>
+            <p className="text-xs text-slate-400 mt-0.5">المتابعة إلى بَيْت BAYT</p>
           </div>
         </div>
 
@@ -239,7 +239,7 @@ export function GoogleAccountChooserModal({ isOpen, onClose }: GoogleAccountChoo
 
         {/* Footer */}
         <div className="p-3.5 bg-black/40 border-t border-slate-800/80 text-center text-[10px] text-slate-500">
-          تطبيق آمن ومشفر للمتابعة إلى سَكَن عبر حساب Google
+          تطبيق آمن ومشفر للمتابعة إلى بَيْت عبر حساب Google
         </div>
       </div>
     </div>

@@ -79,11 +79,11 @@ function buildOtpEmailHtml(otp: string, userName?: string): string {
       <td align="center">
         <table role="presentation" width="100%" style="max-width: 540px; background-color: #ffffff; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0;">
           
-          <!-- Header with SAKAN Branding -->
+          <!-- Header with BAYT Branding -->
           <tr>
             <td style="background-color: #1e3a2f; padding: 32px 24px; text-align: center;">
               <h1 style="margin: 0; color: #ffffff; font-size: 26px; font-weight: 800; letter-spacing: -0.5px;">
-                سَكَن <span style="font-size: 14px; font-weight: 600; color: #6ee7b7; letter-spacing: 2px;">SAKAN</span>
+                بَيْت <span style="font-size: 14px; font-weight: 600; color: #6ee7b7; letter-spacing: 2px;">BAYT</span>
               </h1>
               <p style="margin: 6px 0 0 0; color: #cbd5e1; font-size: 13px;">المنصة الأولى للشقق المفروشة في السودان</p>
             </td>
@@ -96,7 +96,7 @@ function buildOtpEmailHtml(otp: string, userName?: string): string {
                 ${greeting} 👋
               </h2>
               <p style="margin: 0 0 24px 0; font-size: 14px; line-height: 1.7; color: #475569;">
-                تلقينا طلباً لإعادة تعيين كلمة المرور الخاصة بحسابك على منصة سكن. استخدم رمز التحقق التالي لإكمال العملية:
+                تلقينا طلباً لإعادة تعيين كلمة المرور الخاصة بحسابك على منصة بيت. استخدم رمز التحقق التالي لإكمال العملية:
               </p>
 
               <!-- OTP Code Box -->
@@ -113,7 +113,7 @@ function buildOtpEmailHtml(otp: string, userName?: string): string {
               <!-- Security Notice -->
               <div style="background-color: #fffbeb; border-right: 4px solid #f59e0b; padding: 14px 16px; border-radius: 8px; margin: 24px 0;">
                 <p style="margin: 0; font-size: 12px; line-height: 1.6; color: #92400e; font-weight: 600;">
-                  ⚠️ تحذير أمني: لا تشارك هذا الرمز مع أي شخص، بما في ذلك فريق دعم سكن.
+                  ⚠️ تحذير أمني: لا تشارك هذا الرمز مع أي شخص، بما في ذلك فريق دعم بيت.
                 </p>
               </div>
 
@@ -126,7 +126,7 @@ function buildOtpEmailHtml(otp: string, userName?: string): string {
           <!-- Footer -->
           <tr>
             <td style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 20px 24px; text-align: center; color: #94a3b8; font-size: 12px;">
-              <p style="margin: 0;">منصة سكن &copy; ${new Date().getFullYear()} — جميع الحقوق محفوظة</p>
+              <p style="margin: 0;">منصة بيت &copy; ${new Date().getFullYear()} — جميع الحقوق محفوظة</p>
               <p style="margin: 4px 0 0 0; font-size: 11px;">هذه الرسالة تم إرسالها تلقائياً، يرجى عدم الرد عليها.</p>
             </td>
           </tr>
@@ -165,22 +165,22 @@ export async function sendPasswordResetOtpEmail(
       };
     }
 
-    const fromAddress = process.env.SMTP_FROM || `منصة سكن <${process.env.SMTP_USER}>`;
+    const fromAddress = process.env.SMTP_FROM || `منصة بيت <${process.env.SMTP_USER}>`;
 
     await transporter.sendMail({
       from: fromAddress,
       to: email,
-      subject: `رمز استعادة كلمة المرور لمنصة سكن: ${otp}`,
+      subject: `رمز استعادة كلمة المرور لمنصة بَيْت: ${otp}`,
       html: buildOtpEmailHtml(otp, userName),
-      text: `مرحباً، رمز استعادة كلمة المرور لمنصة سكن هو: ${otp} (صالح لمدة 5 دقائق). لا تشاركه مع أحد.`,
+      text: `مرحباً، رمز استعادة كلمة المرور لمنصة بَيْت هو: ${otp} (صالح لمدة 5 دقائق). لا تشاركه مع أحد.`,
     });
 
-    console.log(`[SAKAN EMAIL] ✅ OTP sent successfully to ${email}`);
+    console.log(`[BAYT EMAIL] ✅ OTP sent successfully to ${email}`);
     return { success: true };
   } catch (error: any) {
-    console.error("[SAKAN EMAIL ERROR] Failed to send email:", error.message || error);
+    console.error("[BAYT EMAIL ERROR] Failed to send email:", error.message || error);
     // In case of SMTP network/auth error during dev, log the OTP anyway so the flow doesn't block
-    console.log("\n[SAKAN EMAIL FALLBACK] OTP CODE:", otp, "for:", email, "\n");
+    console.log("\n[BAYT EMAIL FALLBACK] OTP CODE:", otp, "for:", email, "\n");
     return {
       success: false,
       error: error.message || "فشل إرسال البريد الإلكتروني عبر خادم SMTP",

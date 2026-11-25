@@ -24,10 +24,10 @@ export function Footer() {
           <div className="space-y-2">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-xl bg-white border border-slate-200/90 p-0.5 flex items-center justify-center shadow-sm">
-                <Image src="/logo.png" alt="سكن SAKAN" width={28} height={28} className="w-full h-full object-contain" />
+                <Image src="/logo.png" alt="بَيْت BAYT" width={28} height={28} className="w-full h-full object-contain" />
               </div>
               <span className="text-base font-extrabold text-brand-900 tracking-tight">
-                سَكَن <span className="text-xs font-semibold text-brand-700 uppercase tracking-widest">SAKAN</span>
+                بَيْت <span className="text-xs font-semibold text-brand-700 uppercase tracking-widest">BAYT</span>
               </span>
             </div>
             <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
@@ -77,7 +77,7 @@ export function Footer() {
         {/* Bottom Credits & Developer Signature */}
         <div className={`pt-5 flex flex-col sm:flex-row items-center ${SHOW_DEVELOPER_CREDIT ? "justify-between" : "justify-center"} gap-3 text-xs text-slate-400 font-medium`}>
           <p dir="rtl" className="dir-rtl text-center">
-            جميع الحقوق محفوظة لمنصة سَكَن العقارية © {new Date().getFullYear()}
+            جميع الحقوق محفوظة لمنصة بَيْت العقارية © {new Date().getFullYear()}
           </p>
 
           {/* MS TECH Developer Credit (Hidden until user requests to show it) */}

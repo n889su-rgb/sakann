@@ -65,7 +65,7 @@ export function DirectContactModal({
         window.location.href = `tel:${cleaned}`;
       } else {
         const text = encodeURIComponent(
-          `السلام عليكم، بخصوص إعلانكم على منصة سكن: "${property.title}"، هل الشقة ما زالت متاحة للمعاينة؟`
+          `السلام عليكم، بخصوص إعلانكم على منصة بَيْت: "${property.title}"، هل الشقة ما زالت متاحة للمعاينة؟`
         );
         window.open(`https://wa.me/${cleaned.startsWith("0") ? "249" + cleaned.slice(1) : cleaned}?text=${text}`, "_blank");
       }

@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           success: false,
-          error: "هذا البريد الإلكتروني غير مسجل في منصة سكن، يرجى التأكد من البريد أو إنشاء حساب جديد.",
+          error: "هذا البريد الإلكتروني غير مسجل في منصة بَيْت، يرجى التأكد من البريد أو إنشاء حساب جديد.",
         },
         { status: 404 }
       );

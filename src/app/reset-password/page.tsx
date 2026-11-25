@@ -93,7 +93,7 @@ export default function ResetPasswordPage() {
           <div>
             <h1 className="text-xl font-extrabold text-slate-900">تعيين كلمة المرور الجديدة</h1>
             <p className="text-xs text-slate-500 font-medium max-w-xs mx-auto mt-1 leading-relaxed">
-              اختر كلمة مرور قوية وجديدة لحسابك على منصة سكن لحمايته.
+              اختر كلمة مرور قوية وجديدة لحسابك على منصة بَيْت لحمايته.
             </p>
           </div>
         </div>

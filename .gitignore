@@ -32,3 +32,4 @@ Thumbs.db
 *.docx
 WhatsApp Image*
 check_db.js
+*.tsbuildinfo

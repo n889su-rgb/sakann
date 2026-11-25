@@ -46,11 +46,11 @@ export function Navbar() {
         <div className="max-w-5xl mx-auto flex items-center justify-between" suppressHydrationWarning>
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-xl bg-white border border-slate-200/90 p-1 flex items-center justify-center shadow-sm">
-              <Image src="/logo.png" alt="سكن SAKAN" width={36} height={36} className="w-full h-full object-contain" priority />
+              <Image src="/logo.png" alt="بَيْت BAYT" width={36} height={36} className="w-full h-full object-contain" priority />
             </div>
             <div>
               <span className="text-xl font-extrabold tracking-tight text-slate-900 block leading-tight">
-                سَكَن <span className="text-xs font-semibold text-emerald-700 uppercase tracking-widest mr-1">SAKAN</span>
+                بَيْت <span className="text-xs font-semibold text-emerald-700 uppercase tracking-widest mr-1">BAYT</span>
               </span>
               <span className="text-[11px] text-slate-500 font-medium block">بوابة إدارة المنصة المخصصة</span>
             </div>
@@ -70,11 +70,11 @@ export function Navbar() {
         <div className="max-w-5xl mx-auto flex items-center justify-between" suppressHydrationWarning>
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="w-10 h-10 rounded-xl bg-white border border-slate-200/90 p-1 flex items-center justify-center shadow-sm group-hover:border-brand-700 transition">
-              <Image src="/logo.png" alt="سكن SAKAN" width={36} height={36} className="w-full h-full object-contain" priority />
+              <Image src="/logo.png" alt="بَيْت BAYT" width={36} height={36} className="w-full h-full object-contain" priority />
             </div>
             <div>
               <span className="text-xl font-extrabold tracking-tight text-brand-900 block leading-tight">
-                سَكَن <span className="text-xs font-semibold text-brand-700 uppercase tracking-widest mr-1">SAKAN</span>
+                بَيْت <span className="text-xs font-semibold text-brand-700 uppercase tracking-widest mr-1">BAYT</span>
               </span>
               <span className="text-[11px] text-slate-500 font-medium block">شقق مفروشة جاهزة للإيجار</span>
             </div>

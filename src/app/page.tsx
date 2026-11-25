@@ -107,7 +107,7 @@ export default function HomePage() {
           </div>
           <h3 className="text-lg font-bold text-brand-900 mb-1">لا توجد عقارات بعد</h3>
           <p className="text-xs text-slate-500 max-w-xs mb-6">
-            كن أول من يضيف شقة مفروشة للإيجار على سكن وتواصل مع مئات المستأجرين يومياً.
+            كن أول من يضيف شقة مفروشة للإيجار على بيت وتواصل مع مئات المستأجرين يومياً.
           </p>
           <Link
             href="/properties/new"

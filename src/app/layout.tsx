@@ -4,7 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "سَكَن | SAKAN - شقق مفروشة جاهزة للإيجار",
+  title: "بَيْت | BAYT - شقق مفروشة جاهزة للإيجار",
   description: "المنصة الأولى المتخصصة في تأجير الشقق المفروشة في السودان مع اتصال مباشر بالمالك ونشر فوري.",
   icons: {
     icon: "/favicon.png",
