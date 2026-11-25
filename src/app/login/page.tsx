@@ -34,8 +34,10 @@ export default function LoginPage() {
   }, []);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const digits = e.target.value.replace(/\D/g, "").slice(0, 9);
-    setPhone(digits);
+    let digits = e.target.value.replace(/\D/g, "");
+    if (digits.startsWith("249")) digits = digits.slice(3);
+    while (digits.startsWith("0")) digits = digits.slice(1);
+    setPhone(digits.slice(0, 9));
     if (requiresPassword) {
       setRequiresPassword(false);
       setIdentifiedUser(null);
@@ -112,16 +114,6 @@ export default function LoginPage() {
 
   return (
     <div className="max-w-md mx-auto pt-6 pb-12">
-      {/* Top Brand Header */}
-      <div className="flex items-center justify-center pb-4 border-b border-slate-200 mb-6">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-white border border-slate-200/90 p-1 flex items-center justify-center shadow-sm">
-            <Image src="/logo.png" alt="بَيْت BAYT" width={32} height={32} className="w-full h-full object-contain" priority />
-          </div>
-          <span className="text-base font-extrabold text-brand-900 tracking-tight">بَيْت BAYT</span>
-        </div>
-      </div>
-
       <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
         {/* Requirement Notice */}
         <div className="p-3.5 bg-emerald-50 border border-emerald-200/80 rounded-2xl flex items-center gap-2.5 text-emerald-900 text-xs font-semibold leading-relaxed">

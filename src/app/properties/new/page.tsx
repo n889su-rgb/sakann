@@ -18,6 +18,7 @@ export default function NewPropertyPage() {
   const [city, setCity] = useState("الخرطوم");
   const [district, setDistrict] = useState("");
   const [currency, setCurrency] = useState<"SDG" | "USD">("SDG");
+  const [rentalPeriod, setRentalPeriod] = useState<"MONTHLY" | "DAILY">("MONTHLY");
   const [price, setPrice] = useState("0");
   const [bedrooms, setBedrooms] = useState("0");
   const [bathrooms, setBathrooms] = useState("0");
@@ -103,8 +104,8 @@ export default function NewPropertyPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title,
-          description: description.trim(),
+          title: rentalPeriod === "DAILY" && !title.includes("يومي") ? `${title} (إيجار يومي)` : title,
+          description: rentalPeriod === "DAILY" ? `[نظام الإيجار: يومي]\n${description.trim()}` : description.trim(),
           city,
           district: district || undefined,
           price: parseFloat(price) || 0,
@@ -254,32 +255,62 @@ export default function NewPropertyPage() {
           </div>
         </div>
 
-        {/* Currency Toggle */}
-        <div>
-          <label className="block text-xs font-bold text-slate-700 mb-1.5">العملة</label>
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => setCurrency("SDG")}
-              className={`py-3 rounded-2xl font-bold text-sm border transition ${
-                currency === "SDG"
-                  ? "bg-brand-800 text-white border-brand-800 shadow-sm"
-                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
-              }`}
-            >
-              جنيه سوداني
-            </button>
-            <button
-              type="button"
-              onClick={() => setCurrency("USD")}
-              className={`py-3 rounded-2xl font-bold text-sm border transition ${
-                currency === "USD"
-                  ? "bg-brand-800 text-white border-brand-800 shadow-sm"
-                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
-              }`}
-            >
-              دولار أمريكي
-            </button>
+        {/* Rental Period & Currency */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">نظام الإيجار</label>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setRentalPeriod("MONTHLY")}
+                className={`py-3 rounded-2xl font-bold text-xs sm:text-sm border transition ${
+                  rentalPeriod === "MONTHLY"
+                    ? "bg-brand-800 text-white border-brand-800 shadow-sm"
+                    : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                }`}
+              >
+                شهرياً
+              </button>
+              <button
+                type="button"
+                onClick={() => setRentalPeriod("DAILY")}
+                className={`py-3 rounded-2xl font-bold text-xs sm:text-sm border transition ${
+                  rentalPeriod === "DAILY"
+                    ? "bg-brand-800 text-white border-brand-800 shadow-sm"
+                    : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                }`}
+              >
+                يومياً (مفروش)
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">العملة</label>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setCurrency("SDG")}
+                className={`py-3 rounded-2xl font-bold text-xs sm:text-sm border transition ${
+                  currency === "SDG"
+                    ? "bg-brand-800 text-white border-brand-800 shadow-sm"
+                    : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                }`}
+              >
+                جنيه سوداني
+              </button>
+              <button
+                type="button"
+                onClick={() => setCurrency("USD")}
+                className={`py-3 rounded-2xl font-bold text-xs sm:text-sm border transition ${
+                  currency === "USD"
+                    ? "bg-brand-800 text-white border-brand-800 shadow-sm"
+                    : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                }`}
+              >
+                دولار أمريكي
+              </button>
+            </div>
           </div>
         </div>
 
@@ -328,7 +359,9 @@ export default function NewPropertyPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1.5 text-center">السعر شهرياً</label>
+            <label className="block text-xs font-bold text-slate-700 mb-1.5 text-center">
+              {rentalPeriod === "DAILY" ? "السعر يومياً" : "السعر شهرياً"}
+            </label>
             <input
               type="text"
               inputMode="numeric"
@@ -366,8 +399,10 @@ export default function NewPropertyPage() {
                 required
                 value={contactPhone.replace(/^(\+249|249)/, "")}
                 onChange={(e) => {
-                  const digits = e.target.value.replace(/\D/g, "").slice(0, 9);
-                  setContactPhone(digits ? `249${digits}` : "");
+                  let digits = e.target.value.replace(/\D/g, "");
+                  if (digits.startsWith("249")) digits = digits.slice(3);
+                  while (digits.startsWith("0")) digits = digits.slice(1);
+                  setContactPhone(digits ? `249${digits.slice(0, 9)}` : "");
                 }}
                 maxLength={9}
                 className="w-full bg-transparent py-3 px-3 text-sm font-bold tracking-wider text-slate-900 focus:outline-none"
@@ -389,8 +424,10 @@ export default function NewPropertyPage() {
                 inputMode="numeric"
                 value={whatsappNumber.replace(/^(\+249|249)/, "")}
                 onChange={(e) => {
-                  const digits = e.target.value.replace(/\D/g, "").slice(0, 9);
-                  setWhatsappNumber(digits ? `249${digits}` : "");
+                  let digits = e.target.value.replace(/\D/g, "");
+                  if (digits.startsWith("249")) digits = digits.slice(3);
+                  while (digits.startsWith("0")) digits = digits.slice(1);
+                  setWhatsappNumber(digits ? `249${digits.slice(0, 9)}` : "");
                 }}
                 maxLength={9}
                 className="w-full bg-transparent py-3 px-3 text-sm font-bold tracking-wider text-slate-900 focus:outline-none"

@@ -152,13 +152,22 @@ export function Navbar() {
               )}
 
               {!user ? (
-                <Link
-                  href="/login"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-brand-800 bg-white border border-slate-200 hover:bg-slate-50 px-3.5 py-2 rounded-xl transition shadow-sm"
-                >
-                  <LogIn className="w-4 h-4 text-brand-800" />
-                  دخول / تسجيل
-                </Link>
+                <div className="flex items-center gap-2">
+                  <Link
+                    href="/properties/new"
+                    className="inline-flex items-center gap-1.5 bg-brand-800 hover:bg-brand-700 active:scale-95 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition"
+                  >
+                    <PlusCircle className="w-4 h-4" />
+                    <span>أضف شقتك مجاناً</span>
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-brand-800 bg-white border border-slate-200 hover:bg-slate-50 px-3.5 py-2 rounded-xl transition shadow-sm"
+                  >
+                    <LogIn className="w-4 h-4 text-brand-800" />
+                    دخول / تسجيل
+                  </Link>
+                </div>
               ) : (
                 <>
                   <Link
@@ -195,19 +204,32 @@ export function Navbar() {
       {!pathname.startsWith("/admin") && (
         <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 py-2 px-3 shadow-lg" suppressHydrationWarning>
           <div className="flex items-center justify-around max-w-md mx-auto" suppressHydrationWarning>
-            {/* For Guests: Login tab */}
+            {/* For Guests: Add Property quick tab + Login tab */}
             {!user && (
-              <Link
-                href="/login"
-                className={`flex flex-col items-center gap-1 px-3 py-1 rounded-xl transition ${
-                  pathname === "/login" || pathname === "/register"
-                    ? "text-brand-800 font-bold"
-                    : "text-slate-500 hover:text-slate-800"
-                }`}
-              >
-                <LogIn className="w-5 h-5 stroke-2" />
-                <span className="text-[11px]">دخول / تسجيل</span>
-              </Link>
+              <>
+                <Link
+                  href="/properties/new"
+                  className={`flex flex-col items-center gap-1 px-3 py-1 rounded-xl transition ${
+                    pathname === "/properties/new"
+                      ? "text-brand-800 font-bold"
+                      : "text-slate-500 hover:text-slate-800"
+                  }`}
+                >
+                  <PlusCircle className="w-5 h-5 stroke-2 text-brand-700" />
+                  <span className="text-[11px] font-bold">أضف عقار</span>
+                </Link>
+                <Link
+                  href="/login"
+                  className={`flex flex-col items-center gap-1 px-3 py-1 rounded-xl transition ${
+                    pathname === "/login" || pathname === "/register"
+                      ? "text-brand-800 font-bold"
+                      : "text-slate-500 hover:text-slate-800"
+                  }`}
+                >
+                  <LogIn className="w-5 h-5 stroke-2" />
+                  <span className="text-[11px]">دخول / تسجيل</span>
+                </Link>
+              </>
             )}
 
             {[...navItems].reverse().map((item) => {

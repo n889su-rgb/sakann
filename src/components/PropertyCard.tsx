@@ -27,6 +27,7 @@ interface PropertyCardProps {
   property: {
     id: string;
     title: string;
+    description?: string | null;
     city: string;
     district?: string | null;
     price: number;
@@ -93,6 +94,13 @@ export function PropertyCard({ property, onContactClick, isGuest }: PropertyCard
     toggle(property.id);
   };
 
+  const isDaily = Boolean(
+    property.title?.includes("يومي") ||
+    property.title?.includes("يومياً") ||
+    property.description?.includes("إيجار يومي") ||
+    property.description?.includes("باليوم")
+  );
+
   return (
     <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden hover:shadow-md transition flex flex-col group">
       {/* Property Image Link */}
@@ -106,7 +114,7 @@ export function PropertyCard({ property, onContactClick, isGuest }: PropertyCard
         {/* Currency & Price Badge */}
         <div className="absolute top-3 right-3 bg-brand-900/90 backdrop-blur-md text-white px-3 py-1.5 rounded-xl text-sm font-bold shadow-md">
           {formatPrice(property.price, property.currency)}
-          <span className="text-[10px] font-normal mr-1 text-emerald-200">/ شهرياً</span>
+          <span className="text-[10px] font-normal mr-1 text-emerald-200">{isDaily ? "/ يومياً" : "/ شهرياً"}</span>
         </div>
 
         {/* Status Badge */}
@@ -172,11 +180,11 @@ export function PropertyCard({ property, onContactClick, isGuest }: PropertyCard
           <div className="flex items-center gap-4 mt-3 text-xs text-slate-600 font-semibold bg-slate-50 p-2 rounded-xl">
             <div className="flex items-center gap-1">
               <Bed className="w-4 h-4 text-brand-700" />
-              <span>{property.bedrooms} غرف</span>
+              <span>{property.bedrooms === 1 ? "غرفة واحدة" : property.bedrooms === 2 ? "غرفتان" : `${property.bedrooms} غرف`}</span>
             </div>
             <div className="flex items-center gap-1">
               <Bath className="w-4 h-4 text-brand-700" />
-              <span>{property.bathrooms} حمامات</span>
+              <span>{property.bathrooms === 1 ? "حمام واحد" : property.bathrooms === 2 ? "حمامان" : `${property.bathrooms} حمامات`}</span>
             </div>
           </div>
 

@@ -9,6 +9,7 @@ import { stripHtmlTags } from "@/lib/sanitize";
 const registerSchema = z.object({
   name: z.string().min(2, "الاسم يجب أن يكون حرفين على الأقل"),
   phone: z.string().min(9, "رقم الهاتف غير صحيح").regex(/^[0-9+\s]+$/, "يرجى إدخال أرقام فقط"),
+  email: z.string().email("يرجى إدخال بريد إلكتروني صحيح").optional().or(z.literal("")).nullable(),
   password: z.string().optional().nullable(),
   isLandlord: z.boolean().optional(),
 });
@@ -58,6 +59,20 @@ export async function POST(request: Request) {
       );
     }
 
+    // Check existing email if provided
+    const cleanEmail = validated.email && validated.email.trim() ? validated.email.trim().toLowerCase() : null;
+    if (cleanEmail) {
+      const existingEmail = await prisma.user.findFirst({
+        where: { email: cleanEmail },
+      });
+      if (existingEmail) {
+        return NextResponse.json(
+          { success: false, error: "البريد الإلكتروني مسجل لحساب آخر مسبقاً" },
+          { status: 400 }
+        );
+      }
+    }
+
     let passwordHash: string | null = null;
     if (validated.password && validated.password.trim().length >= 4) {
       passwordHash = await bcrypt.hash(validated.password.trim(), 10);
@@ -67,6 +82,7 @@ export async function POST(request: Request) {
       data: {
         name: safeName,
         phone: cleanPhone,
+        email: cleanEmail,
         passwordHash,
         role: "USER",
         isVerified: true,

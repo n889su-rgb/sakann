@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { User, Phone, Lock, Loader2, AlertCircle, ShieldCheck, Eye, EyeOff, Home, Sparkles } from "lucide-react";
+import { User, Phone, Lock, Loader2, AlertCircle, ShieldCheck, Eye, EyeOff, Home, Sparkles, Mail } from "lucide-react";
 import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 
 export default function RegisterPage() {
@@ -12,6 +12,7 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [isLandlord, setIsLandlord] = useState(false);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -29,8 +30,10 @@ export default function RegisterPage() {
   }, []);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const digits = e.target.value.replace(/\D/g, "").slice(0, 9);
-    setPhone(digits);
+    let digits = e.target.value.replace(/\D/g, "");
+    if (digits.startsWith("249")) digits = digits.slice(3);
+    while (digits.startsWith("0")) digits = digits.slice(1);
+    setPhone(digits.slice(0, 9));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -58,6 +61,7 @@ export default function RegisterPage() {
         body: JSON.stringify({
           name: name.trim(),
           phone: `249${cleanPhone}`,
+          email: isLandlord && email.trim() ? email.trim().toLowerCase() : null,
           password: isLandlord ? password : null,
           isLandlord,
         }),
@@ -79,16 +83,6 @@ export default function RegisterPage() {
 
   return (
     <div className="max-w-md mx-auto pt-6 pb-12">
-      {/* Top Brand Header */}
-      <div className="flex items-center justify-center pb-4 border-b border-slate-200 mb-6">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-white border border-slate-200/90 p-1 flex items-center justify-center shadow-sm">
-            <Image src="/logo.png" alt="بَيْت BAYT" width={32} height={32} className="w-full h-full object-contain" priority />
-          </div>
-          <span className="text-base font-extrabold text-brand-900 tracking-tight">بَيْت BAYT</span>
-        </div>
-      </div>
-
       <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
         {/* Requirement Notice */}
         <div className="p-3.5 bg-emerald-50 border border-emerald-200/80 rounded-2xl flex items-center gap-2.5 text-emerald-900 text-xs font-semibold leading-relaxed">
@@ -247,6 +241,26 @@ export default function RegisterPage() {
               <span className="text-[10px] text-slate-400 mt-1 block">
                 حقل واحد سهل (4 خانات أو أحرف على الأقل) لحماية شققك من التعديل
               </span>
+            </div>
+          )}
+
+          {/* Email Field: ONLY for Landlords (Recommended for Password Recovery OTP) */}
+          {isLandlord && (
+            <div className="animate-in fade-in duration-200">
+              <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
+                <span>البريد الإلكتروني (موصى به للمؤجر)</span>
+                <span className="text-[10px] text-emerald-700 font-semibold">لاستعادة كلمة المرور عبر الرمز</span>
+              </label>
+              <div className="relative">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="name@example.com"
+                  className="w-full bg-slate-50 border border-slate-200 py-3 pr-10 pl-3 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-brand-700 focus:bg-white transition dir-ltr text-right"
+                />
+                <Mail className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
+              </div>
             </div>
           )}
 

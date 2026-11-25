@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { PlusCircle, Home as HomeIcon, AlertCircle, Loader2 } from "lucide-react";
+import { PlusCircle, Home as HomeIcon, AlertCircle, Loader2, RotateCcw, Search } from "lucide-react";
 import { SearchAndFilter } from "@/components/SearchAndFilter";
 import { PropertyCard } from "@/components/PropertyCard";
 import { DirectContactModal } from "@/components/DirectContactModal";
@@ -18,8 +18,10 @@ export default function HomePage() {
     commissionEnabled: true,
     tenantCommissionPercent: 5.0,
   });
+  const [activeFilters, setActiveFilters] = useState<any>(null);
 
   const fetchProperties = async (filters?: any) => {
+    setActiveFilters(filters || null);
     setLoading(true);
     try {
       const params = new URLSearchParams();
@@ -100,23 +102,55 @@ export default function HomePage() {
           <span className="text-xs font-semibold">جاري تحميل الشقق المتوفرة...</span>
         </div>
       ) : properties.length === 0 ? (
-        /* Empty State Matching Screenshot 1 Exactly */
-        <div className="py-16 px-4 bg-white rounded-3xl border border-slate-200/90 text-center flex flex-col items-center justify-center shadow-sm">
-          <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-4">
-            <HomeIcon className="w-10 h-10 stroke-[1.5]" />
+        activeFilters && (activeFilters.search || activeFilters.city || activeFilters.currency || activeFilters.maxPrice > 0 || activeFilters.bedrooms > 0 || (activeFilters.amenities && activeFilters.amenities.length > 0)) ? (
+          /* Search Empty State */
+          <div className="py-16 px-4 bg-white rounded-3xl border border-slate-200/90 text-center flex flex-col items-center justify-center shadow-sm animate-in fade-in duration-200">
+            <div className="w-16 h-16 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mb-4 border border-amber-200">
+              <Search className="w-8 h-8 stroke-[1.5]" />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900 mb-1">لا توجد شقق مطابقة لخيارات البحث</h3>
+            <p className="text-xs text-slate-500 max-w-sm mb-6 leading-relaxed">
+              لم نعثر على شقق تطابق معايير الفلترة المحددة. جرب اختيار مدينة أخرى أو تقليل عدد الغرف لإظهار المزيد من النتائج.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <button
+                onClick={() => {
+                  setActiveFilters(null);
+                  fetchProperties();
+                }}
+                className="inline-flex items-center gap-2 bg-brand-800 hover:bg-brand-700 active:scale-95 text-white px-5 py-2.5 rounded-2xl text-xs font-bold shadow-md transition cursor-pointer"
+              >
+                <RotateCcw className="w-4 h-4" />
+                إعادة ضبط الفلاتر وعرض الكل
+              </button>
+              <Link
+                href="/properties/new"
+                className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2.5 rounded-2xl text-xs font-bold transition"
+              >
+                <PlusCircle className="w-4 h-4" />
+                أضف شقة في هذه المنطقة
+              </Link>
+            </div>
           </div>
-          <h3 className="text-lg font-bold text-brand-900 mb-1">لا توجد عقارات بعد</h3>
-          <p className="text-xs text-slate-500 max-w-xs mb-6">
-            كن أول من يضيف شقة مفروشة للإيجار على بيت وتواصل مع مئات المستأجرين يومياً.
-          </p>
-          <Link
-            href="/properties/new"
-            className="inline-flex items-center gap-2 bg-brand-800 hover:bg-brand-700 active:scale-95 text-white px-6 py-3 rounded-2xl text-sm font-bold shadow-md transition"
-          >
-            <PlusCircle className="w-5 h-5" />
-            أضف عقارك الأول
-          </Link>
-        </div>
+        ) : (
+          /* General Empty State */
+          <div className="py-16 px-4 bg-white rounded-3xl border border-slate-200/90 text-center flex flex-col items-center justify-center shadow-sm">
+            <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-4">
+              <HomeIcon className="w-10 h-10 stroke-[1.5]" />
+            </div>
+            <h3 className="text-lg font-bold text-brand-900 mb-1">لا توجد عقارات بعد</h3>
+            <p className="text-xs text-slate-500 max-w-xs mb-6">
+              كن أول من يضيف شقة مفروشة للإيجار على بيت وتواصل مع مئات المستأجرين يومياً.
+            </p>
+            <Link
+              href="/properties/new"
+              className="inline-flex items-center gap-2 bg-brand-800 hover:bg-brand-700 active:scale-95 text-white px-6 py-3 rounded-2xl text-sm font-bold shadow-md transition"
+            >
+              <PlusCircle className="w-5 h-5" />
+              أضف عقارك الأول
+            </Link>
+          </div>
+        )
       ) : (
         <div>
           <div className="flex items-center justify-between mb-4">

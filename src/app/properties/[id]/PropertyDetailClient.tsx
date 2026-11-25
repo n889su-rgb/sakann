@@ -66,6 +66,13 @@ export default function PropertyDetailClient({
       ? property.images
       : [{ url: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1000&q=80" }];
 
+  const isDaily = Boolean(
+    property.title?.includes("يومي") ||
+    property.title?.includes("يومياً") ||
+    property.description?.includes("إيجار يومي") ||
+    property.description?.includes("باليوم")
+  );
+
   const handleOpenContact = (type: "PHONE_CALL" | "WHATSAPP") => {
     setContactType(type);
     setIsContactOpen(true);
@@ -152,7 +159,7 @@ export default function PropertyDetailClient({
           {/* Price Badge */}
           <div className="absolute top-4 right-4 bg-brand-900/95 backdrop-blur-md text-white px-4 py-2 rounded-2xl text-base font-extrabold shadow-lg">
             {formatPrice(property.price, property.currency)}
-            <span className="text-xs font-normal mr-1 text-emerald-200">/ شهرياً</span>
+            <span className="text-xs font-normal mr-1 text-emerald-200">{isDaily ? "/ يومياً" : "/ شهرياً"}</span>
           </div>
 
           {/* Floating Actions: Favorite & Share Buttons */}
@@ -232,7 +239,9 @@ export default function PropertyDetailClient({
             <Bed className="w-5 h-5 text-brand-800" />
             <div>
               <span className="text-[11px] text-slate-500 block">غرف النوم</span>
-              <span className="text-sm font-bold text-slate-800">{property.bedrooms} غرف</span>
+              <span className="text-sm font-bold text-slate-800">
+                {property.bedrooms === 1 ? "غرفة واحدة" : property.bedrooms === 2 ? "غرفتان" : `${property.bedrooms} غرف`}
+              </span>
             </div>
           </div>
 
@@ -240,7 +249,9 @@ export default function PropertyDetailClient({
             <Bath className="w-5 h-5 text-brand-800" />
             <div>
               <span className="text-[11px] text-slate-500 block">الحمامات</span>
-              <span className="text-sm font-bold text-slate-800">{property.bathrooms} حمام</span>
+              <span className="text-sm font-bold text-slate-800">
+                {property.bathrooms === 1 ? "حمام واحد" : property.bathrooms === 2 ? "حمامان" : `${property.bathrooms} حمامات`}
+              </span>
             </div>
           </div>
         </div>

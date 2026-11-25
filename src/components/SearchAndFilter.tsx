@@ -80,7 +80,8 @@ export function SearchAndFilter({ onFilterChange }: SearchAndFilterProps) {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-white border border-slate-200 py-3.5 pr-11 pl-4 rounded-2xl text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-700 focus:border-transparent transition"
+            placeholder="ابحث بالمدينة، الحي، أو اسم المنطقة (مثال: الرياض، المهندسين، بورتسودان...)"
+            className="w-full bg-white border border-slate-200 py-3.5 pr-11 pl-4 rounded-2xl text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-700 focus:border-transparent transition placeholder:text-slate-400 placeholder:text-xs sm:placeholder:text-sm"
           />
           <Search className="w-5 h-5 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           {search && (

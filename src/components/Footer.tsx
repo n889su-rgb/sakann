@@ -43,7 +43,7 @@ export function Footer() {
                 تصفح الشقق
               </Link>
               <Link href="/properties/new" className="hover:text-brand-800 transition">
-                أضف شقتك
+                أضف شقتك مجاناً
               </Link>
               <Link href="/login" className="hover:text-brand-800 transition">
                 تسجيل الدخول
@@ -51,16 +51,30 @@ export function Footer() {
               <Link href="/register" className="hover:text-brand-800 transition">
                 إنشاء حساب
               </Link>
+              <Link href="/terms" className="hover:text-brand-800 transition">
+                شروط الاستخدام
+              </Link>
+              <Link href="/privacy" className="hover:text-brand-800 transition">
+                سياسة الخصوصية
+              </Link>
+              <a
+                href="https://wa.me/249111900328?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%A5%D8%AF%D8%A7%D8%B1%D8%A9%20%D9%85%D9%86%D8%B5%D8%A9%20%D8%A8%D9%8A%D8%AA"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-emerald-700 transition font-bold"
+              >
+                الدعم الفني (واتساب)
+              </a>
             </div>
           </div>
 
           {/* Guarantee Badges */}
           <div className="space-y-2">
-            <h4 className="text-xs font-bold text-slate-800">مميزات المنصة</h4>
-            <div className="space-y-1 text-[11px] text-slate-500 font-medium">
+            <h4 className="text-xs font-bold text-slate-800">الضمانات والعمولة</h4>
+            <div className="space-y-1.5 text-[11px] text-slate-500 font-medium">
               <div className="flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-brand-700 shrink-0" />
-                <span>نشر فوري ومباشر للشقق</span>
+                <span>نشر فوري ومباشر للشقق بدون تعقيد</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <PhoneCall className="w-3.5 h-3.5 text-brand-700 shrink-0" />
@@ -68,7 +82,10 @@ export function Footer() {
               </div>
               <div className="flex items-center gap-1.5">
                 <ShieldCheck className="w-3.5 h-3.5 text-brand-700 shrink-0" />
-                <span>عمولة موحدة وواضحة 5%</span>
+                <span>عمولة موحدة وواضحة 5% عند إتمام الإيجار</span>
+              </div>
+              <div className="p-2 bg-slate-50 border border-slate-200/80 rounded-xl text-[10px] text-slate-600 mt-1 font-mono">
+                بنكك: <span className="font-bold text-brand-900">2345678</span> (منصة بيت العقارية)
               </div>
             </div>
           </div>
