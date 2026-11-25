@@ -10,7 +10,7 @@ const registerSchema = z.object({
   name: z.string().min(2, "الاسم يجب أن يكون حرفين على الأقل"),
   phone: z.string().min(9, "رقم الهاتف غير صحيح").regex(/^[0-9+\s]+$/, "يرجى إدخال أرقام فقط"),
   email: z.string().email("يرجى إدخال بريد إلكتروني صحيح").optional().or(z.literal("")).nullable(),
-  password: z.string().optional().nullable(),
+  password: z.string().min(4, "كلمة المرور يجب ألا تقل عن 4 خانات"),
   isLandlord: z.boolean().optional(),
 });
 
@@ -73,10 +73,7 @@ export async function POST(request: Request) {
       }
     }
 
-    let passwordHash: string | null = null;
-    if (validated.password && validated.password.trim().length >= 4) {
-      passwordHash = await bcrypt.hash(validated.password.trim(), 10);
-    }
+    const passwordHash = await bcrypt.hash(validated.password.trim(), 10);
 
     const newUser = await prisma.user.create({
       data: {

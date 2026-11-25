@@ -46,11 +46,9 @@ export default function RegisterPage() {
       return;
     }
 
-    if (isLandlord) {
-      if (!password || password.length < 4) {
-        setError("يرجى إدخال كلمة مرور أو رمز PIN مكون من 4 خانات على الأقل لحماية إعلاناتك");
-        return;
-      }
+    if (!password || password.length < 4) {
+      setError("يرجى إدخال كلمة مرور أو رمز PIN مكون من 4 خانات على الأقل لحماية حسابك");
+      return;
     }
 
     setLoading(true);
@@ -61,8 +59,8 @@ export default function RegisterPage() {
         body: JSON.stringify({
           name: name.trim(),
           phone: `249${cleanPhone}`,
-          email: isLandlord && email.trim() ? email.trim().toLowerCase() : null,
-          password: isLandlord ? password : null,
+          email: email.trim() ? email.trim().toLowerCase() : null,
+          password: password.trim(),
           isLandlord,
         }),
       });
@@ -215,54 +213,52 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Password Field: ONLY for Landlords (Single field with Show/Hide toggle) */}
-          {isLandlord && (
-            <div className="animate-in fade-in duration-200">
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                كلمة المرور لحماية إعلاناتك
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 py-3 pr-10 pl-10 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-brand-700 focus:bg-white transition"
-                />
-                <Lock className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
-                >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-              </div>
-              <span className="text-[10px] text-slate-400 mt-1 block">
-                حقل واحد سهل (4 خانات أو أحرف على الأقل) لحماية شققك من التعديل
-              </span>
+          {/* Password Field: Required for all accounts */}
+          <div className="space-y-1">
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">
+              كلمة المرور *
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="4 خانات أو أحرف على الأقل"
+                className="w-full bg-slate-50 border border-slate-200 py-3 pr-10 pl-10 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-brand-700 focus:bg-white transition"
+              />
+              <Lock className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition cursor-pointer"
+                aria-label={showPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
             </div>
-          )}
+            <span className="text-[10px] text-slate-400 mt-1 block">
+              كلمة مرور أو رمز PIN (4 خانات على الأقل) لتسجيل الدخول وحماية حسابك
+            </span>
+          </div>
 
-          {/* Email Field: ONLY for Landlords (Recommended for Password Recovery OTP) */}
-          {isLandlord && (
-            <div className="animate-in fade-in duration-200">
-              <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
-                <span>البريد الإلكتروني (موصى به للمؤجر)</span>
-                <span className="text-[10px] text-emerald-700 font-semibold">لاستعادة كلمة المرور عبر الرمز</span>
-              </label>
-              <div className="relative">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@example.com"
-                  className="w-full bg-slate-50 border border-slate-200 py-3 pr-10 pl-3 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-brand-700 focus:bg-white transition dir-ltr text-right"
-                />
-                <Mail className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
-              </div>
+          {/* Email Field: Recommended for OTP Password Recovery */}
+          <div>
+            <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
+              <span>البريد الإلكتروني (اختياري / موصى به)</span>
+              <span className="text-[10px] text-emerald-700 font-semibold">لاستعادة كلمة السر عبر الرمز</span>
+            </label>
+            <div className="relative">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="name@example.com"
+                className="w-full bg-slate-50 border border-slate-200 py-3 pr-10 pl-3 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-brand-700 focus:bg-white transition dir-ltr text-right placeholder:text-slate-400"
+              />
+              <Mail className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
             </div>
-          )}
+          </div>
 
           <button
             type="submit"
